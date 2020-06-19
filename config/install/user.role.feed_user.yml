@@ -1,0 +1,19 @@
+langcode: hu
+status: true
+dependencies:
+  enforced:
+    module:
+      - feed
+id: feed_user
+label: 'Feed User'
+weight: 4
+is_admin: null
+permissions:
+  - 'create feed'
+  - 'create feed_item'
+  - 'delete feed'
+  - 'delete feed_item'
+  - 'edit feed'
+  - 'edit feed_item'
+  - 'view feed'
+  - 'view feed_item'

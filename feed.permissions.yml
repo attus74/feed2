@@ -1,0 +1,19 @@
+'view feed':
+  title: 'display Feed'
+'edit feed':
+  title: 'edit Feed'
+'delete feed':
+  title: 'delete Feed'
+'create feed':
+  title: 'create Feed'
+'administer feed':
+  title: 'administer Feed'
+  'restrict access': true
+'view feed_item':
+  title: 'display Feed Item'
+'edit feed_item':
+  title: 'edit Feed Item'
+'delete feed_item':
+  title: 'delete Feed Item'
+'create feed_item':
+  title: 'create Feed Item'

@@ -1,0 +1,21 @@
+{
+  "name": "attus/feed",
+  "description": "Reading and saving Feed Content",
+  "type": "attus-module",
+  "authors": [
+    {
+      "name": "Attila Németh",
+      "email": "attus@germanicus.hu"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "drupal/core":"^8.8 || ^9.0",
+    "attus/installer": "^1",
+    "attus/entity_base": "^1",
+    "dg/rss-php": "^1.4",
+    "attus/og_reader": "^1.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

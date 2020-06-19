@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.feed_item.author
+  module:
+    - feed
+id: feed_item.feed_item.author
+field_name: author
+entity_type: feed_item
+bundle: feed_item
+label: Author
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.feed_item.body
+  module:
+    - feed
+    - text
+id: feed_item.feed_item.body
+field_name: body
+entity_type: feed_item
+bundle: feed_item
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

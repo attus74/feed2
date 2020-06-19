@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.feed.image
+  module:
+    - feed
+id: feed.feed.image
+field_name: image
+entity_type: feed
+bundle: feed
+label: Image
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,28 @@
+langcode: hu
+status: true
+dependencies:
+  config:
+    - field.storage.feed.user
+  module:
+    - feed
+id: feed.feed.user
+field_name: user
+entity_type: feed
+bundle: feed
+label: User
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: false
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

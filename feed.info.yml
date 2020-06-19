@@ -1,0 +1,9 @@
+name: Feed
+description: Reading and saving Feed Content
+type: module
+core_version_requirement: ^8 || ^9
+package: Feed
+dependencies:
+  - entity_base
+  - link
+  - text

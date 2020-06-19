@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Feed
+ *
+ * @author Attila Németh
+ * @date 18.04.2020
+ */
+/**
+ * Implements hook_theme()
+ */
+function feed_theme()
+{
+  $hooks = [
+    //Feed Item
+    'feed_item' => [
+      'render element' => 'elements',
+      'template' => 'feed-item',
+      'path' => drupal_get_path('module', 'feed') . '/theme',
+    ],
+    //Feed
+    'feed' => [
+      'render element' => 'elements',
+      'template' => 'feed',
+      'path' => drupal_get_path('module', 'feed') . '/theme',
+    ],
+  ];
+  return $hooks;
+}
+
+function template_preprocess_feed(&$variables): void
+{
+  $variables['content'] = $variables['elements'];
+}

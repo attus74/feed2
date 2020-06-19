@@ -1,0 +1,4 @@
+services:
+  plugin.manager.feed_update:
+    class: Drupal\feed\FeedUpdateManager
+    parent: default_plugin_manager

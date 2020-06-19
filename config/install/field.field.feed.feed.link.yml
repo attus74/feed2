@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.feed.link
+  module:
+    - feed
+    - link
+id: feed.feed.link
+field_name: link
+entity_type: feed
+bundle: feed
+label: Link
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 0
+field_type: link

@@ -1,0 +1,127 @@
+entity.feed.canonical:
+  path: 'feed/{feed}'
+  defaults:
+    _entity_view: feed
+    _title: Feed
+  requirements:
+    _entity_access: feed.view
+entity.feed.collection:
+  path: feed
+  defaults:
+    _entity_list: feed
+    _title: Feed
+  requirements:
+    _permission: 'administer feed'
+  options:
+    _admin_route: TRUE
+entity.feed.add_form:
+  path: feed/add
+  defaults:
+    _entity_form: feed.add
+    _title: 'Add Feed'
+  requirements:
+    _entity_create_access: feed
+  options:
+    _admin_route: TRUE
+entity.feed.edit_form:
+  path: 'feed/{feed}/edit'
+  defaults:
+    _entity_form: feed.edit
+    _title: Edit
+  requirements:
+    _entity_access: feed.edit
+  options:
+    _admin_route: TRUE
+entity.feed.delete_form:
+  path: 'feed/{feed}/delete'
+  defaults:
+    _entity_form: feed.delete
+    _title: Delete
+  requirements:
+    _entity_access: feed.delete
+entity.feed_item.canonical:
+  path: 'feed/item/{feed_item}'
+  defaults:
+    _entity_view: feed_item
+    _title: 'Feed Item'
+  requirements:
+    _entity_access: feed_item.view
+entity.feed_item.collection:
+  path: feed/item
+  defaults:
+    _entity_list: feed_item
+    _title: 'Feed Item'
+  requirements:
+    _permission: 'administer feed'
+entity.feed_item.add_form:
+  path: feed/item/add
+  defaults:
+    _entity_form: feed_item.add
+    _title: 'Add Feed Item'
+  requirements:
+    _entity_create_access: feed_item
+entity.feed_item.edit_form:
+  path: 'feed/item/{feed_item}/edit'
+  defaults:
+    _entity_form: feed_item.edit
+    _title: Edit
+  requirements:
+    _entity_access: feed_item.edit
+entity.feed_item.delete_form:
+  path: 'feed/item/{feed_item}/delete'
+  defaults:
+    _entity_form: feed_item.delete
+    _title: Delete
+  requirements:
+    _entity_access: feed_item.delete
+feed.settings:
+  path: admin/structure/feed/feed
+  defaults:
+    _form: Drupal\feed\Form\FeedSettingsForm
+    _title: Settings
+  requirements:
+    _permission: 'administer feed'
+feed_item.settings:
+  path: admin/structure/feed/item
+  defaults:
+    _form: Drupal\feed\Form\FeedItemSettingsForm
+    _title: Settings
+  requirements:
+    _permission: 'administer feed'
+feed.settings.base:
+  path: admin/strucutre/feed
+  defaults:
+    _controller: Drupal\feed\Controller\Feed::StructurePage
+    _title: Feed
+  requirements:
+    _permission: 'administer feed'  
+feed.api.create:
+  path: feed/api/create
+  defaults:
+    _controller: Drupal\feed\Controller\Feed::createFeed
+  requirements:
+    _permission: view feed
+  methods:
+    - POST
+feed.api.delete:
+  path: feed/api/{feedId}
+  defaults:
+    _controller: Drupal\feed\Controller\Feed::deleteFeed
+  requirements:
+    _permission: view feed
+  methods:
+    - DELETE
+feed.api.all:
+  path: feed/api
+  defaults:
+    _controller: Drupal\feed\Controller\Feed::getSubscribedFeeds
+  requirements:
+    _permission: view feed
+feed.update.next:
+  path: feed/update/next
+  defaults:
+    _controller: Drupal\feed\Controller\Feed::updateNext
+  requirements:
+    _permission: view feed
+  methods:
+    - POST

@@ -1,0 +1,10 @@
+entity.feed.add_form:
+  route_name: entity.feed.add_form
+  title: 'Add Feed'
+  appears_on:
+    - entity.feed.collection
+entity.feed_item.add_form:
+  route_name: entity.feed_item.add_form
+  title: 'Add Feed Item'
+  appears_on:
+    - entity.feed_item.collection
