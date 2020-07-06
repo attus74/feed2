@@ -3,7 +3,6 @@
 namespace Drupal\feed\Storage;
 
 use Drupal\entity_base\EntityBaseStorage;
-use Drupal\feed\FeedInterface;
 
 /**
  * Feed

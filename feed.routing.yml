@@ -53,6 +53,8 @@ entity.feed_item.collection:
     _title: 'Feed Item'
   requirements:
     _permission: 'administer feed'
+  options:
+    _admin_route: TRUE
 entity.feed_item.add_form:
   path: feed/item/add
   defaults:
@@ -123,5 +125,13 @@ feed.update.next:
     _controller: Drupal\feed\Controller\Feed::updateNext
   requirements:
     _permission: view feed
+  methods:
+    - POST
+feed_item.set.read:
+  path: feed/item/{feedItemId}/setread
+  defaults:
+    _controller: Drupal\feed\Controller\Feeditem::setRead
+  requirements:
+    _custom_access: Drupal\feed\Controller\FeedItem::feedItemAccess
   methods:
     - POST

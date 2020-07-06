@@ -20,7 +20,7 @@ use Drupal\feed\FeedItemInterface;
  *   id = "feed_item",
  *   label = @Translation("Feed Item"),
  *   handlers = {
- *     "storage" = "Drupal\entity_base\EntityBaseStorage",
+ *     "storage" = "Drupal\feed\Storage\FeedItem",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\feed\Controller\FeedItemList",
  *     "views_data" = "Drupal\views\EntityViewsData",

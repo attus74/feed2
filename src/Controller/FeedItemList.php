@@ -18,7 +18,9 @@ class FeedItemList extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header = [];
+    $header = [
+      t('Item'),
+    ];
     // You can add custom header elements, e.g.:
     // $header['fieldName'] = t('Field Name');
     return $header + parent::buildHeader();
@@ -28,7 +30,9 @@ class FeedItemList extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    $row = [];
+    $row = [
+      $entity->toLink()->toString(),
+    ];
     // You can add custom row elements, e.g.:
     // $row['fieldName'] = $entity->get('fieldName')->get(0)->get('value')->getValue();
     return $row + parent::buildRow($entity);

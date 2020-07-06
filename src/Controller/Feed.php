@@ -106,11 +106,30 @@ class Feed extends ControllerBase {
     }
   }
   
+  /**
+   * Egy feed frissítése, és az olvasatlan elemek betöltése
+   * @return JsonResponse
+   * 
+   * 26.06.2020
+   */
   public function updateNext(): JsonResponse
   {
     $feed = \Drupal::entityTypeManager()->getStorage('feed')->loadNextToUpdate();
-    $feed->update();
-    die('UPDATE');
+//    $feed = \Drupal::entityTypeManager()->getStorage('feed')->load(4);
+    if ($feed) {
+      $feed->update();
+    }
+    $data = [];
+    $unreadItems = \Drupal::entityTypeManager()->getStorage('feed_item')
+        ->loadUnread(\Drupal::currentUser()->id());
+    $formatter = \Drupal::service('entityjson.formatter');
+    foreach($unreadItems as $feedItem) {
+        $formatter->setEntity($feedItem);
+        $formatter->format();
+        $formatter->addRelationship('feed');
+        $data[] = $formatter->getFormatted();
+    }
+    return new JsonApiResponse($data);
   }
   
 }

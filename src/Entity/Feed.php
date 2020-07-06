@@ -144,6 +144,8 @@ class Feed extends ContentEntityBase implements FeedInterface {
    */
   public function update(): void
   {
+    $this->set('update', time() + 3600);
+    $this->save();
     $pluginType = \Drupal::service('plugin.manager.feed_update');
     $definitions = $pluginType->getDefinitions();
     foreach($definitions as $definition) {
@@ -153,6 +155,8 @@ class Feed extends ContentEntityBase implements FeedInterface {
           'feed' => $this,
         ]);
         $plugin->update();
+        $this->set('update', time() + 450);
+        $this->save();
       }
     }
   }

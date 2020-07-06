@@ -7,3 +7,4 @@ dependencies:
   - entity_base
   - link
   - text
+  - entityjson
