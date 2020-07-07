@@ -91,6 +91,7 @@ class Index extends FeedUpdateBase {
                   list($datePart, $timePart) = explode(' ', $dateString);
                   list($year, $month, $day) = explode('.', $datePart);
                   list($hour, $minute, $second) = explode(':', $timePart);
+                  date_default_timezone_set('Europe/Budapest');
                   $values['date'] = mktime($hour, $minute, $second, $month, $day, $year);
                 }
                 if (preg_match('/art_owner/', $tdas->item($k)->getAttribute('class'))) {
@@ -163,15 +164,15 @@ class Index extends FeedUpdateBase {
       libxml_use_internal_errors(true);
       $dom = new \DOMDocument();
       $dom->loadHtml((string)$response->getBody());
-      $divs = $this->_dom->getElementsByTagName('div');
+      $divs = $dom->getElementsByTagName('div');
       for ($i = 0; $i < $divs->length; $i++) {
         if ($divs->item($i)->getAttribute('class') == 'art_t') {
           $imgs = $divs->item($i)->getElementsByTagName('img');
-          $body = $this->_dom->saveHTML($divs->item($i));
+          $body = $dom->saveHTML($divs->item($i));
           $newImages = [];
           if ($imgs->length > 0) {
             for ($k = 0; $k < $imgs->length; $k++) {
-              $oldImages[$k] = $this->_dom->saveHTML($imgs->item($k));
+              $oldImages[$k] = $dom->saveHTML($imgs->item($k));
               $newImages[$k] = '[IMG]';
             }
             $body = str_replace($oldImages, $newImages, $body);
