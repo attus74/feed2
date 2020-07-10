@@ -3,6 +3,7 @@
 namespace Drupal\feed\Plugin\FeedUpdate;
 
 use Feed;
+use GuzzleHttp\Exception\ClientException;
 use Attus\OgReader\Reader;
 use Drupal\feed\FeedUpdateBase;
 
@@ -76,9 +77,17 @@ class Rss extends FeedUpdateBase {
           $values['author'] = $item->{'dc:creator'};
         }
         $reader = new Reader((string)$item->link);
-        $reader->read();
-        if ($reader->getValue('image')) {
-          $values['image'] = $reader->getValue('image');
+        try {
+          $reader->read();
+          if ($reader->getValue('image')) {
+            $values['image'] = $reader->getValue('image');
+          }
+        } catch (ClientException $ex) {
+          \Drupal::logger('Feed')->notice('%code: @message', [
+            '%code' => $ex->getCode(),
+            '@message' => $ex->getMessage(),
+            'link' => $this->configuration['feed']->toLink()->toString(),
+          ]);
         }
         $feedItem = \Drupal::entityTypeManager()->getStorage('feed_item')->create($values);
         $feedItem->save();
