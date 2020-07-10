@@ -130,7 +130,7 @@ feed.update.next:
 feed_item.set.read:
   path: feed/item/{feedItemId}/setread
   defaults:
-    _controller: Drupal\feed\Controller\Feeditem::setRead
+    _controller: Drupal\feed\Controller\FeedItem::setRead
   requirements:
     _custom_access: Drupal\feed\Controller\FeedItem::feedItemAccess
   methods:

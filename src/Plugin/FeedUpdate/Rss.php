@@ -46,6 +46,7 @@ class Rss extends FeedUpdateBase {
       else {
         $guid = (string)$item->link;
       }
+      $guid = mb_substr($guid, 0, 96);
       $existingItem = \Drupal::entityTypeManager()->getStorage('feed_item')
           ->loadByGuid($guid);
       if ($existingItem) {
