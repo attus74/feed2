@@ -33,7 +33,15 @@ class Rss extends FeedUpdateBase {
   {
     $source = $this->configuration['feed']->get('source')
         ->get(0)->get('value')->getValue();
-    $this->_rss = Feed::loadRss($source);
+    try {
+      $this->_rss = Feed::loadRss($source);
+    } catch (FeedException $ex) {
+      \Drupal::logger('Feed')->notice('%code: @message', [
+        '%code' => $ex->getCode(),
+        '@message' => $ex->getMessage(),
+        'link' => $this->configuration['feed']->toLink()->toString(),
+      ]);
+    }
     $this->_updateFeed();
     $this->_updateItems();
   }
@@ -111,21 +119,30 @@ class Rss extends FeedUpdateBase {
       $this->configuration['feed']->save();
     }
     $reader = new Reader($rss->link);
-    $reader->read();
-    if (!is_null($reader->getValue('image'))) {
-      $imageUpdate = FALSE;
-      if ($this->configuration['feed']->get('image')->isEmpty()) {
-        $imageUpdate = TRUE;
+    try {
+      $reader->read();
+      if (!is_null($reader->getValue('image'))) {
+        $imageUpdate = FALSE;
+        if ($this->configuration['feed']->get('image')->isEmpty()) {
+          $imageUpdate = TRUE;
+        }
+        elseif ($this->configuration['feed']->get('image')
+          ->get(0)->get('value')->getValue() !== $reader->getValue('image')) {
+          $imageUpdate = TRUE;
+        }
+        if ($imageUpdate) {
+          $this->configuration['feed']->set('image', $reader->getValue('image'));
+          $this->configuration['feed']->save();
+        }
       }
-      elseif ($this->configuration['feed']->get('image')
-        ->get(0)->get('value')->getValue() !== $reader->getValue('image')) {
-        $imageUpdate = TRUE;
-      }
-      if ($imageUpdate) {
-        $this->configuration['feed']->set('image', $reader->getValue('image'));
-        $this->configuration['feed']->save();
-      }
+    } catch (ClientException $ex) {
+      \Drupal::logger('Feed')->notice('%code: @message', [
+        '%code' => $ex->getCode(),
+        '@message' => $ex->getMessage(),
+        'link' => $this->configuration['feed']->toLink()->toString(),
+      ]);
     }
+    
   }
   
 }
