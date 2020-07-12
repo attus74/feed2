@@ -35,7 +35,7 @@ class Rss extends FeedUpdateBase {
         ->get(0)->get('value')->getValue();
     try {
       $this->_rss = Feed::loadRss($source);
-    } catch (FeedException $ex) {
+    } catch (\FeedException $ex) {
       \Drupal::logger('Feed')->notice('%code: @message', [
         '%code' => $ex->getCode(),
         '@message' => $ex->getMessage(),
