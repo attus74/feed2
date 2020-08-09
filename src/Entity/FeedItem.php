@@ -2,12 +2,10 @@
 
 namespace Drupal\feed\Entity;
 
-use Drupal\Core\Entity\EntityStorageInterface;
+use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\EntityChangedTrait;
-use Drupal\user\UserInterface;
 use Drupal\feed\FeedItemInterface;
 
 /**
@@ -90,6 +88,103 @@ class FeedItem extends ContentEntityBase implements FeedItemInterface {
       ->setLabel(t('Loaded'))
       ->setDescription(t('Last Load Date'));
     return $fields;
+  }
+  
+  public function getImageAvatar()
+  {
+    $image = imagecreatetruecolor(48, 48);
+    $feed = $this->get('feed')->first()->entity;
+    $avatarUrl = $feed->get('image')->first()->get('value')->getValue();
+    try {
+      $avatarImage = $this->_getRemoteImage($avatarUrl);
+    }
+    catch (RequestException $ex) {
+      \Drupal::logger('Feed')->warning('Avatar: %code @message', [
+        '%code' => $ex->getCode(),
+        '@message' => $ex->getMessage(),
+      ]);
+      return $image;
+    } catch (\Exception $ex) {
+      var_dump($ex);
+      die();
+    }
+    $w = imagesx($avatarImage);
+    $h = imagesy($avatarImage);
+    if ($w > $h) {
+      $ratio = 48 / $h;
+    }
+    else {
+      $ratio = 48 / $w;
+    }
+    $avatarWidth = $w * $ratio;
+    $avatarHeight = $h * $ratio;
+    $dst_x = (48 - $avatarWidth) / 2;
+    $dst_y = (48 - $avatarHeight) / 2;
+    $src_x = 0;
+    $src_y = 0;
+    $dst_w = $avatarWidth;
+    $dst_h = $avatarHeight;
+    $src_w = $w;
+    $src_h = $h;
+    imagecopyresampled($image, $avatarImage, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+    return $image;
+  }
+  
+  public function getImageStory()
+  {
+    if ($this->get('image')->isEmpty()) {
+      $image = imagecreatetruecolor(1, 1);
+      return $image;
+    }
+    $image = imagecreatetruecolor(800, 450);
+    $storyUrl = $this->get('image')->first()->get('value')->getValue();
+    try {
+      $storyImage = $this->_getRemoteImage($storyUrl);
+    }
+    catch (RequestException $ex) {
+      \Drupal::logger('Feed')->warning('Avatar: %code @message', [
+        '%code' => $ex->getCode(),
+        '@message' => $ex->getMessage(),
+      ]);
+      return $image;
+    } catch (\Exception $ex) {
+      var_dump($ex);
+      die();
+    }
+    $w = imagesx($storyImage);
+    $h = imagesy($storyImage);
+    if ($w > $h / 9 * 16) {
+      $ratio = 450 / $h;
+    }
+    else {
+      $ratio = 800 / $w;
+    }
+    $storyWidth = $w * $ratio;
+    $storyHeight = $h * $ratio;
+    $dst_x = (800 - $storyWidth) / 2;
+    $dst_y = (450 - $storyHeight) / 2;
+    $src_x = 0;
+    $src_y = 0;
+    $dst_w = $storyWidth;
+    $dst_h = $storyHeight;
+    $src_w = $w;
+    $src_h = $h;
+    imagecopyresampled($image, $storyImage, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+    return $image;
+  }
+  
+  private function _getRemoteImage(string $url)
+  {
+    $response = \Drupal::httpClient()->get($url);
+    $contentTypes = $response->getHeader('Content-Type');
+    switch($contentTypes[0]) {
+      case 'image/jpeg':
+        $avatarImage = imagecreatefromjpeg($url);
+        break;
+      default:
+        throw new \Exception('Unknown Image Type: ' . $contentTypes[0]);
+    }
+    return $avatarImage;
   }
 
 }

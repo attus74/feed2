@@ -135,3 +135,15 @@ feed_item.set.read:
     _custom_access: Drupal\feed\Controller\FeedItem::feedItemAccess
   methods:
     - POST
+feed_item.image.avatar:
+  path: feed/item/{feedItemId}/image/avatar.jpg
+  defaults:
+    _controller: Drupal\feed\Controller\FeedItem::imageAvatar
+  requirements:
+    _access: 'TRUE'
+feed_item.image.story:
+  path: feed/item/{feedItemId}/image/story.jpg
+  defaults:
+    _controller: Drupal\feed\Controller\FeedItem::imageStory
+  requirements:
+    _access: 'TRUE'

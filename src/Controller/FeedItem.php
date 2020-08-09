@@ -4,6 +4,7 @@ namespace Drupal\feed\Controller;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
 
@@ -62,6 +63,36 @@ class FeedItem extends ControllerBase {
     else {
       throw new NotFoundHttpException;
     }
+  }
+  
+  /**
+   * Avatar Image of a Feed Item
+   * @param string $feedItemId
+   */
+  public function imageAvatar(string $feedItemId): Response
+  {
+    $feedItem = \Drupal::entityTypeManager()->getStorage('feed_item')
+        ->loadByUuid($feedItemId);
+    $image = $feedItem->getImageAvatar();
+    return new StreamedResponse(function() use ($image) {
+      imagejpeg($image);
+      imagedestroy($image);
+    }, 200, [
+      'Content-Type' => 'image/jpeg',
+    ]);
+  }
+  
+  public function imageStory(string $feedItemId)
+  {
+    $feedItem = \Drupal::entityTypeManager()->getStorage('feed_item')
+        ->loadByUuid($feedItemId);
+    $image = $feedItem->getImageStory();
+    return new StreamedResponse(function() use ($image) {
+      imagejpeg($image);
+      imagedestroy($image);
+    }, 200, [
+      'Content-Type' => 'image/jpeg',
+    ]);
   }
   
 }

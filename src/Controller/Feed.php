@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 use Drupal\Component\Serialization\Json;
 use Attus\JsonApiExtended\JsonApiResponse;
 
@@ -127,7 +128,22 @@ class Feed extends ControllerBase {
         $formatter->setEntity($feedItem);
         $formatter->format();
         $formatter->addRelationship('feed');
-        $data[] = $formatter->getFormatted();
+        $f = $formatter->getFormatted();
+        $f['meta'] = [
+          'image' => [
+            'avatar' => Url::fromRoute('feed_item.image.avatar', [
+              'feedItemId' => $feedItem->uuid(),
+            ], [
+              'absolute' => TRUE,
+            ])->toString(),
+            'story' => Url::fromRoute('feed_item.image.story', [
+              'feedItemId' => $feedItem->uuid(),
+            ], [
+              'absolute' => TRUE,
+            ])->toString(),
+          ],
+        ];
+        $data[] = $f;
     }
     return new JsonApiResponse($data);
   }
