@@ -179,9 +179,11 @@ class FeedItem extends ContentEntityBase implements FeedItemInterface {
     $contentTypes = $response->getHeader('Content-Type');
     switch($contentTypes[0]) {
       case 'image/jpeg':
+      case 'image/jpeg;charset=UTF-8':
         $avatarImage = imagecreatefromjpeg($url);
         break;
       case 'image/png':
+      case 'image/png;charset=UTF-8':
         $avatarImage = imagecreatefrompng($url);
         break;
       default:
