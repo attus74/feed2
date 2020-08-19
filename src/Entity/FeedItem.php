@@ -181,6 +181,9 @@ class FeedItem extends ContentEntityBase implements FeedItemInterface {
       case 'image/jpeg':
         $avatarImage = imagecreatefromjpeg($url);
         break;
+      case 'image/png':
+        $avatarImage = imagecreatefrompng($url);
+        break;
       default:
         throw new \Exception('Unknown Image Type: ' . $contentTypes[0]);
     }
