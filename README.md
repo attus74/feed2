@@ -1,2 +1,2 @@
-# Feed 2
-Drupal Feed Module 2
+# Feed
+Drupal Feed Module
