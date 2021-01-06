@@ -44,7 +44,7 @@ class Feed extends ControllerBase {
         ->loadBySource($args['attributes']['source']);
     if (is_null($feed)) {
       $values = [
-        'type' => $args['attributes']['feed_type'],
+        'type' => $args['attributes']['type'],
         'source' => $args['attributes']['source'],
       ];
       $feed = \Drupal::entityTypeManager()->getStorage('feed')->create($values);

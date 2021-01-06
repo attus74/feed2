@@ -10,10 +10,6 @@ feed.settings:
   title: Feed
   route_name: feed.settings
   parent: feed.settings.base
-entity.feed_item.collection:
-  title: 'Feed Item'
-  route_name: entity.feed_item.collection
-  parent: system.admin_content
 feed_item.settings:
   title: 'Feed Item'
   route_name: feed_item.settings
